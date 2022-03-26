@@ -20,6 +20,7 @@ public:
 
     void modifier_sommet_depart(Sommet sommet_depart);
     void modifier_sommet_arrive(Sommet sommet_arrive);
+    void changerOrientation();
 
     void dessiner();
 };
