@@ -39,3 +39,7 @@ void Arete::modifier_sommet_arrive(Sommet sommet_arrive)
 {
     d_sommet_arrive = sommet_arrive;
 }
+
+void Arete::changerOrientation() {
+
+}

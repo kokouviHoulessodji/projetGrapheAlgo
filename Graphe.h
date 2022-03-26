@@ -14,22 +14,23 @@ class Graphe {
 protected:
     int **d_matrice_d_adjascence;
     int *d_fs,*d_aps;
+    static int nombre_arc();
 public:
     Graphe();
     virtual ~Graphe();
 
     void ajoutSommet();
-    void matriceFromFichier(const string &NomFichier);  //TESTED
-    void fsApsFromFichier(const string &NomFichier);   //TESTED
-    void matriceToFsAps();  //TESTED
-    void fsApsToMatrice();  //TESTED
-    int* demi_degre_int() const; //TESTED
+
+    void matriceFromFichier(const string &NomFichier);
+    void fsApsFromFichier(const string &NomFichier);
+    void matriceToFsAps();
+    void fsApsToMatrice();
+    int* demi_degre_int() const;
     int* demi_degre_ext() const; //TESTED
     int* getApp()const;//TESTED
     int* getFp()const;//TESTED
     int* distance(int sommet_courant)const;//TESTED
     int** distance()const;//TESTED
-    bool djikstra (int s, int *&d, int *&pred);
     virtual void readFile(const string&fileName);
 
     void afficheFsAps()const;  //TESTED
@@ -43,17 +44,15 @@ public:
     int* det_rang( int *&num);
     int* rang(int *&pileDesEntrets,int *&pileDesElement);
     int* rang()const;
-    void empiler(int x, int*&pilch) const;
 
     //Les fonction pour les tests
-    void afficheDDE()const; //TESTED
-    void afficheDDI()const;  //TESTED
+    void afficheDDE()const;
+    void afficheDDI()const;
     void afficheFpApp()const;
     void afficheMatrice(int** m)const;
 
 private:
     void creerUnFichierMatrice()const;
-
 };
 
 
