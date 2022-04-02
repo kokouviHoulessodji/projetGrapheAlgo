@@ -6,14 +6,22 @@
 
 void Graphe_oriente_value::saisir_cout() {
     int infini = INT_MAX;
-    d_cout = new int*[d_aps[0]+1];
-    d_cout[1] = new int[d_aps[0]+1]{0, 0, 1, 3, infini, 2, infini, 1};
-    d_cout[2] = new int[d_aps[0]+1]{0, infini, 0, 4, infini, 1, infini, infini};
-    d_cout[3] = new int[d_aps[0]+1]{0, infini, infini, 0, infini, 3, 1, infini};
-    d_cout[4] = new int[d_aps[0]+1]{0, infini, infini, 1, 0, infini, infini, infini};
-    d_cout[5] = new int[d_aps[0]+1]{0, infini, infini, infini, 1, 0, infini, infini};
-    d_cout[6] = new int[d_aps[0]+1]{0, infini, infini, infini, 1, infini, 0, infini};
-    d_cout[7] = new int[d_aps[0]+1]{0, infini, infini, 1, infini, infini, 3, 0};
+    int n = d_aps[0];
+    d_cout = new int*[n+1];
+    for (int i = 1; i <= n ; ++i)
+        d_cout[i] = new int[n+1];
+    for (int i = 1; i <= n ; ++i)
+        for (int j = 1; j <= n ; ++j)
+            d_cout[i][j] = infini;
+    for (int i = 1; i <= n ; ++i) {
+        for (int j = 1; j <= n ; ++j) {
+            if (d_matrice_d_adjascence[i][j] == 1)
+            {
+                cout<<"Saisir le poids de l'arc [ "<<i<<", "<<j<<" ] : ";
+                cin>>d_cout[i][j];
+            }
+        }
+    }
 }
 void Graphe_oriente_value::ordonnancement(int *d, int *&fpc, int *&appc, int *&lc)
 {
@@ -57,10 +65,11 @@ void Graphe_oriente_value::ordonnancement(int *d, int *&fpc, int *&appc, int *&l
 }
 
 Graphe_oriente_value::Graphe_oriente_value(Graphe_oriente graphe_oriente) :
-    Graphe_oriente{graphe_oriente}
+    Graphe_oriente{graphe_oriente}, d_cout{}
 {
-
+    saisir_cout();
 }
+
 void Graphe_oriente_value::Dijkstra(int s, int *&d, int *&pr)
 {
     int ind; /* nombre d'elements qui restent a traiter */
@@ -114,22 +123,10 @@ void Graphe_oriente_value::Dijkstra(int s, int *&d, int *&pr)
             }
             k++;
         }
-        std::cout<<"---- ind = "<<ind<<" ----"<<std::endl;
-        std::cout<<"Distance : ";
-        for (int j = 0; j <= n ; ++j) {
-            std::cout<<d[j]<<" ";
-        }
-        std::cout<<std::endl;
-        std::cout<<"Pred : ";
-        for (int j = 0; j <= n ; ++j) {
-            std::cout<<pr[j]<<" ";
-        }
-        std::cout<<std::endl;
     }
 }
 void Graphe_oriente_value::Dijkstra(int **&mat_d, int **&mat_pred)
 {
-    saisir_cout();
     int n = d_aps[0];
     mat_d = new int*[n+1];
     mat_d[0] = new int[1];

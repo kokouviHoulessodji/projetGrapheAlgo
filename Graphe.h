@@ -13,7 +13,9 @@ using namespace std;
 class Graphe {
 protected:
     int **d_matrice_d_adjascence;
-    int *d_fs,*d_aps, *ddi, *dde, **d_cout;
+    int *d_fs,*d_aps, *ddi, *dde;
+    void empiler(int x, int*&pilch) const;
+    int depiler(int *&pile) const;
 public:
     Graphe();
     virtual ~Graphe();
@@ -37,8 +39,7 @@ public:
     int *getFs()const;      //TESTED
     int *getAps()const;     //TESTED
     int **getMatrice()const;    //TESTED
-    void empiler(int x, int*&pilch);
-    int depiler(int *&pile) const;
+
     void saisir_matrice();
 
 

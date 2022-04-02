@@ -11,14 +11,12 @@
 
 class Graphe_non_oriente : public Graphe {
 
-private :
-    std::vector<Arete> d_tableau_arete();
 public :
-    Graphe_non_oriente();
-    void kruskal();
-
-
-
+    Graphe_non_oriente(Graphe graphe);
+    int* codage_prufer();
+    int** decodage_prufer(int *codage);
+    int* coloration();
+    int nombre_chromatique(int *f);
 };
 
 

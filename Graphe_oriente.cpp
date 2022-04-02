@@ -5,19 +5,7 @@ Graphe_oriente::Graphe_oriente(Graphe graphe) : Graphe{graphe}
 {
 
 }
-
-void Graphe_oriente::empiler(int *pile, int valeur) const {
-    pile[valeur] = pile[0];
-    pile[0] = valeur;
-
-}
-
-int Graphe_oriente::depiler(int *pile) const {
-    int x = pile[0];
-    pile[0] = pile[x];
-    return x;
-}
-
+/*
 Graphe_oriente Graphe_oriente::calculerGrapheReduit(int *prem, int *pilch, int *cfc, int *fs, int *aps, int *&fsr, int *&apsr) const {
     int s, kr = 1, nbc = prem[0];
     bool *deja_mis = new bool[nbc + 1];
@@ -47,13 +35,13 @@ Graphe_oriente Graphe_oriente::calculerGrapheReduit(int *prem, int *pilch, int *
     fsr[0] = kr - 1;
     delete[] deja_mis;
 }
-
+*/
 void Graphe_oriente::traverse(int s, int &p, int *&num, int *&ro, int *&pilch, int *&cfc, int *aps, int *fs, int *&tarj, bool *&entarj, int *&prem) const {
     int t;
     p++;
     num[s] = p;
     ro[s] = p; // numérote s et initialise ro[s]
-    empiler(tarj, s);
+    empiler(s, tarj);
     entarj[s] = true;
     for (int k = aps[s]; (t = fs[k]) != 0; k++) {
         if (num[t] == 0) // si t n'est pas encore numéroté { pred[t] = s;
@@ -70,7 +58,7 @@ void Graphe_oriente::traverse(int s, int &p, int *&num, int *&ro, int *&pilch, i
             do {
                 u = depiler(tarj);
                 entarj[u] = false;
-                empiler(pilch, u);
+                empiler(u, pilch);
                 cfc[u] = k;
             } while (u != s);
             prem[k] = pilch[0];
@@ -81,9 +69,6 @@ void Graphe_oriente::traverse(int s, int &p, int *&num, int *&ro, int *&pilch, i
 
 }
 
-void Graphe_oriente::calculerCFC(std::vector<int> &prem, std::vector<int> &pilch, std::vector<int> &cfc) const {
-
-}
 
 void Graphe_oriente::graph_reduit(int *prem, int *pilch, int *cfc, int *fs, int *aps, int *&fsr, int *&apsr) {
 

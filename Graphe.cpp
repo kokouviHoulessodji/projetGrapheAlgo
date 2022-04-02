@@ -1,6 +1,6 @@
 #include "Graphe.h"
 #include <iostream>
-Graphe::Graphe() : d_matrice_d_adjascence{}, d_aps{}, d_fs{}, dde{}, ddi{}, d_cout{}
+Graphe::Graphe() : d_matrice_d_adjascence{}, d_aps{}, d_fs{}, dde{}, ddi{}
 {
     saisir_matrice();
 }
@@ -329,8 +329,7 @@ int* Graphe::rang()const
 {
 
 }
-void Graphe::empiler(int x, int*&pilch)
-{
+void Graphe::empiler(int x, int*&pilch) const {
     pilch[x] = pilch[0];
     pilch[0] = x;
 }
