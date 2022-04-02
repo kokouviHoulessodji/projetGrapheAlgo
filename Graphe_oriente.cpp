@@ -1,8 +1,8 @@
-
-#include <vector>
 #include "Graphe_oriente.h"
+#include <vector>
 
-Graphe_oriente::Graphe_oriente() {
+Graphe_oriente::Graphe_oriente(Graphe graphe) : Graphe{graphe}
+{
 
 }
 

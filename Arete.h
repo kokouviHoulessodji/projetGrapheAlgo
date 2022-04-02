@@ -11,6 +11,7 @@ class  Arete{
 protected:
     Sommet d_sommet_depart, d_sommet_arrive;
     bool d_oriente;
+    int d_poids;
 public:
     Arete(Sommet sommet_depart, Sommet sommet_arrive, bool oriente);
     Arete(Sommet sommet_depart, Sommet sommet_arrive);
