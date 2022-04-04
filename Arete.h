@@ -6,24 +6,25 @@
 #define PROJETGRAPHEALGO_ARETE_H
 
 #include "Sommet.h"
-
+#include <iostream>
 class  Arete{
 protected:
-    Sommet d_sommet_depart, d_sommet_arrive;
-    bool d_oriente;
+    int d_sommet_depart, d_sommet_arrive;
     int d_poids;
 public:
-    Arete(Sommet sommet_depart, Sommet sommet_arrive, bool oriente);
-    Arete(Sommet sommet_depart, Sommet sommet_arrive);
+    Arete(int sommet_depart, int sommet_arrive, int poids);//TESTED
+    Arete(int sommet_depart, int sommet_arrive);//TESTED
     Arete();
-    Sommet sommet_depart();
-    Sommet sommet_Arrive();
+    int sommet_depart() const;//TESTED
+    int sommet_Arrive() const;//TESTED
+    int poids() const;//TESTED
+    void setPoids(int poids);//TESTED
 
-    void modifier_sommet_depart(Sommet sommet_depart);
-    void modifier_sommet_arrive(Sommet sommet_arrive);
-    void changerOrientation();
+    void modifier_sommet_depart(int sommet_depart);//TESTED
+    void modifier_sommet_arrive(int sommet_arrive);//TESTED
+    void changerOrientation();//TESTED
 
-    void dessiner();
+    void dessiner();/*TODO tester dessiner*/
 };
 
 

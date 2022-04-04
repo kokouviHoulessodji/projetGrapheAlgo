@@ -8,44 +8,54 @@
 #include<iostream>
 #include <fstream>
 #include <ostream>
+#include "Arete.h"
 using namespace std;
 
 class Graphe {
 protected:
     int **d_matrice_d_adjascence;
     int *d_fs,*d_aps, *ddi, *dde;
-    void empiler(int x, int*&pilch) const;
-    int depiler(int *&pile) const;
+    Arete *aretes;
+    int d_nb_sommet;
+    int d_nb_aretes;
+    void empiler(int x, int*&pilch);//TESTED
+    int depiler(int *&pile) const;//TESTED
+    void trier();//TESTED
 public:
     Graphe();
     virtual ~Graphe();
 
     void ajoutSommet();
-
+    void menu_console();
+    void menu_graphique();
     void matriceFromFichier(const string &NomFichier);
     void fsApsFromFichier(const string &NomFichier);
-    void matriceToFsAps();
-    void fsApsToMatrice();
-    void demi_degre_int();
+    void matriceToFsAps();//TESTED
+    void fsApsToMatrice();//TESTED
+    void fs_aps_2_fp_app(int *&fp, int *&app);//TESTED
+    void matriceToAretes();//TESTED
+    void aretesToMatrice();//TESTED
+    void demi_degre_int();//TESTED
     void demi_degre_ext(); //TESTED
-    int* getApp()const;//TESTED
-    int* getFp()const;//TESTED
     int* distance(int sommet)const;//TESTED
     int** distance()const;//TESTED
     virtual void readFile(const string&fileName);
 
-    void afficheFsAps();  //TESTED`
+    void afficheFsAps();  //TESTED
     void afficheMatrice();   //TESTED
     int *getFs()const;      //TESTED
     int *getAps()const;     //TESTED
     int **getMatrice()const;    //TESTED
 
-    void saisir_matrice();
-
+    void saisir_graphe();//TESTED
+    void saisir_matrice();//TESTED
+    void saisir_fs_aps();//TESTED
+    void saisir_aretes();//TESTED
 
     int* det_rang( int *&num);
+    /*
     int* rang(int *&pileDesEntrets,int *&pileDesElement);
-    int* rang()const;
+    int* rang()const;*/
 
     //Les fonction pour les tests
     void afficheDDE()const;
@@ -54,7 +64,7 @@ public:
     void afficheMatrice(int** m)const;
 
 private:
-    void creerUnFichierMatrice()const;
+    void creerUnFichierMatrice();
 };
 
 

@@ -8,25 +8,25 @@ void Graphe_oriente_value::saisir_cout() {
     int infini = INT_MAX;
     int n = d_aps[0];
     d_cout = new int*[n+1];
+    d_cout[0] = new int[2];
+    d_cout[0][0] = n;
     for (int i = 1; i <= n ; ++i)
         d_cout[i] = new int[n+1];
     for (int i = 1; i <= n ; ++i)
         for (int j = 1; j <= n ; ++j)
             d_cout[i][j] = infini;
-    for (int i = 1; i <= n ; ++i) {
-        for (int j = 1; j <= n ; ++j) {
-            if (d_matrice_d_adjascence[i][j] == 1)
-            {
-                cout<<"Saisir le poids de l'arc [ "<<i<<", "<<j<<" ] : ";
-                cin>>d_cout[i][j];
-            }
-        }
+    for (int i = 0; i < d_fs[0]-n ; ++i) {
+        double p;
+        cout<<"Saisir le poids de l'arc [ "<<aretes[i].sommet_depart()<<", "<<aretes[i].sommet_Arrive()<<" ] : ";
+        cin>>p;
+        aretes[i].setPoids(p);
+        d_cout[aretes[i].sommet_depart()][aretes[i].sommet_Arrive()] = p;
     }
 }
 void Graphe_oriente_value::ordonnancement(int *d, int *&fpc, int *&appc, int *&lc)
 {
-    int *app = getApp();
-    int *fp = getFp();
+    int *app, *fp;
+    fs_aps_2_fp_app(fp, app);
     int n = app[0], m = fp[0];
     fpc = new int[m+1];
     appc = new int[n+1]; appc[0] = n; lc = new int[n+1]; lc[0] = n;
@@ -64,8 +64,8 @@ void Graphe_oriente_value::ordonnancement(int *d, int *&fpc, int *&appc, int *&l
     fpc[0] = kc;
 }
 
-Graphe_oriente_value::Graphe_oriente_value(Graphe_oriente graphe_oriente) :
-    Graphe_oriente{graphe_oriente}, d_cout{}
+Graphe_oriente_value::Graphe_oriente_value(Graphe_oriente *graphe_oriente) :
+    Graphe_oriente{*graphe_oriente}, d_cout{}
 {
     saisir_cout();
 }
@@ -136,4 +136,57 @@ void Graphe_oriente_value::Dijkstra(int **&mat_d, int **&mat_pred)
     mat_pred[0][0] = n;
     for (int s = 1; s <= n; ++s)
         Dijkstra(s, mat_d[s], mat_pred[s]);
+}
+int Graphe_oriente_value::menu()
+{
+    int choix;
+    {
+        cout << "Quel algorithme souhaitez-vous testé sur ce graphe orienté? " << endl;
+        cout << "1 - Djikstra : taper 1" << endl;
+        cout << "2 - Ordonnancement : taper 2" << endl;
+        cout << "3 - Pour quitter : taper 3" << endl;
+        cin >> choix;
+    }
+    while (choix < 1 || choix > 3);
+    return choix;
+}
+void Graphe_oriente_value::run()
+{
+    int choix = menu();
+    while (choix != 3)
+    {
+        if(choix == 1){
+            int** dist, **pred;
+            Dijkstra(dist, pred);
+            std::cout<<"------ Matrice des distances ------"<<std::endl;
+            for(int i=1;i<=dist[0][0];i++){
+                std::cout<<"sommet "<<i<<" : [ ";
+                for(int j=1;j<=dist[0][0];j++)
+                    cout<<dist[i][j]<<" ";
+                cout<<"]"<<endl;
+            }
+            std::cout<<"------ Matrice des pred ------"<<std::endl;
+            for(int i=1;i<=dist[0][0];i++){
+                std::cout<<"sommet "<<i<<" : [ ";
+                for(int j=1;j<=dist[0][0];j++)
+                    cout<<pred[i][j]<<" ";
+                cout<<"]"<<endl;
+            }
+            int n = dist[0][0];
+            for (int i = 0; i <= n ; ++i)
+                delete[] dist[i];
+            for (int i = 0; i <= n ; ++i)
+                delete[] pred[i];
+        }
+        else if(choix == 2)
+        {
+
+        }
+        choix = menu();
+    }
+}
+
+Graphe_oriente_value::~Graphe_oriente_value() {
+    for (int i = 1; i <= d_cout[0][0] ; ++i)
+        delete[] d_cout[i];
 }

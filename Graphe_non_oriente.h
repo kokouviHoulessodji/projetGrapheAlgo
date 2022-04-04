@@ -12,11 +12,15 @@
 class Graphe_non_oriente : public Graphe {
 
 public :
-    Graphe_non_oriente(Graphe graphe);
-    int* codage_prufer();
-    int** decodage_prufer(int *codage);
-    int* coloration();
-    int nombre_chromatique(int *f);
+    Graphe_non_oriente(Graphe *graphe);
+    Graphe_non_oriente();
+    void codage_prufer(int *&p);/*TODO tester codage prufer*/
+    int** decodage_prufer(int *codage);/*TODO tester décodage prufer*/
+    void coloration(int *&f);//TESTED
+    int nombre_chromatique(const int *f) const;//TESTED
+    virtual void run();
+    virtual int menu();
+
 };
 
 

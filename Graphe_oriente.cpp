@@ -1,7 +1,7 @@
 #include "Graphe_oriente.h"
 #include <vector>
 
-Graphe_oriente::Graphe_oriente(Graphe graphe) : Graphe{graphe}
+Graphe_oriente::Graphe_oriente(Graphe *graphe) : Graphe{*graphe}
 {
 
 }
@@ -36,16 +36,16 @@ Graphe_oriente Graphe_oriente::calculerGrapheReduit(int *prem, int *pilch, int *
     delete[] deja_mis;
 }
 */
-void Graphe_oriente::traverse(int s, int &p, int *&num, int *&ro, int *&pilch, int *&cfc, int *aps, int *fs, int *&tarj, bool *&entarj, int *&prem) const {
+void Graphe_oriente::traverse(int s, int &p, int *&num, int *&ro, int *&cfc, int *&pilch, int *&tarj, bool *&entarj, int *&prem) {
     int t;
     p++;
     num[s] = p;
     ro[s] = p; // numérote s et initialise ro[s]
     empiler(s, tarj);
     entarj[s] = true;
-    for (int k = aps[s]; (t = fs[k]) != 0; k++) {
+    for (int k = d_aps[s]; (t = d_fs[k]) != 0; k++) {
         if (num[t] == 0) // si t n'est pas encore numéroté { pred[t] = s;
-            traverse(t, p, num, ro, pilch, cfc, aps, fs, tarj, entarj, prem);
+            traverse(t, p, num, ro, cfc, pilch, tarj, entarj, prem);
         if (ro[t] < ro[s])
             ro[s] = ro[t];
         else {
@@ -141,9 +141,9 @@ void Graphe_oriente::edition_bases(int *prem, int *pilch, int *br) {
     }
 }
 
-void Graphe_oriente::fortconnexe(int *aps, int *fs, int *&prem, int *&pilch, int *&cfc, int *&pred) {
+void Graphe_oriente::fortconnexe(int *&prem, int *&pilch, int *&cfc, int *&pred) {
 
-    int n = aps[0];
+    int n = d_aps[0];
     prem = new int[n + 1];
     pilch = new int[n + 1];
     cfc = new int[n + 1];
@@ -161,12 +161,46 @@ void Graphe_oriente::fortconnexe(int *aps, int *fs, int *&prem, int *&pilch, int
     }
     pilch[0] = 0;
     tarj[0] = 0;
-    for (int s = 1; s <= aps[0]; s++)
+    for (int s = 1; s <= d_aps[0]; s++)
         if (num[s] == 0)
-            traverse(s, k, num, ro, pilch, cfc, aps, fs, tarj, entarj, prem);
+            traverse(s, k, num, ro, pilch, cfc, tarj, entarj, prem);
     prem[0] = k;
     delete[] tarj;
     delete[] entarj;
     delete[] num;
     delete[] ro;
+}
+
+int Graphe_oriente::menu()
+{
+    int choix;
+    do {
+        cout << "Quel algorithme souhaitez-vous testé sur ce graphe orienté? " << endl;
+        cout << "1 - Tarjan : taper 1" << endl;
+        cout << "2 - Composante fortement connexe : taper 2" << endl;
+        cout << "3 - Pour quitter : taper 3" << endl;
+        cin >> choix;
+    }while (choix < 1 || choix > 3);
+    return choix;
+}
+
+void Graphe_oriente::run() {
+    int choix = menu();
+    while(choix != 3)
+    {
+        if(choix == 1){
+            int s = 0, p = 0;
+            int *num, *ro, *pilch, *cfc, *tarj, *prem;
+            bool *entarj;
+            traverse(s, p, num, ro, pilch, cfc, tarj, entarj, prem);
+            delete num, ro, pilch, cfc, tarj, prem;
+        }
+        else if(choix == 2)
+        {
+            int *prem, *pilch, *cfc, *pred;
+            fortconnexe(prem, pilch, cfc, pred);
+            delete prem, pilch, cfc, pred;
+        }
+        choix = menu();
+    }
 }
